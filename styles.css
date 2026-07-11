@@ -245,11 +245,17 @@ p { margin: 0 0 1em; }
 .mvv-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
 .mvv-card h3 { font-size: 1.4rem; display: flex; align-items: center; gap: .5rem; }
 .mvv-card h3 span { color: var(--gold); }
-.mvv-card p { color: var(--ink-soft); margin: 0; }
-.value-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .55rem; }
+.mvv-card p { color: var(--ink-soft); margin: 0; text-align: justify; hyphens: auto; }
+/* Valores: lista alinhada e harmonizada, com marcador e fios sutis */
+.value-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
 .value-list li {
-  background: var(--lavender-soft); color: var(--rose-dark);
-  padding: .4rem .9rem; border-radius: 999px; font-weight: 600; font-size: .92rem;
+  display: flex; align-items: center; gap: .6rem;
+  color: var(--ink); font-weight: 600; font-size: 1rem;
+  padding: .58rem 0; border-bottom: 1px solid var(--line);
+}
+.value-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.value-list li::before {
+  content: "✦"; color: var(--rose); font-size: .82rem; line-height: 1; flex: none;
 }
 
 /* =============================================================
