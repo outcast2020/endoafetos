@@ -114,9 +114,82 @@
   ]
 }
 </script>
+
+<!-- Cortina de acesso (site em construção) — proteção leve do lado do cliente -->
+<style id="gate-style">
+  body:not(.unlocked) > header,
+  body:not(.unlocked) > main,
+  body:not(.unlocked) > footer,
+  body:not(.unlocked) > .to-top { display: none !important; }
+  #gate {
+    position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 1.25rem;
+    background:
+      radial-gradient(1000px 500px at 50% -10%, #f7e0b4 0%, transparent 55%),
+      linear-gradient(160deg, #f8f4f2 0%, #e4dbef 100%);
+    font-family: 'Nunito', -apple-system, 'Segoe UI', sans-serif;
+  }
+  body.unlocked #gate { display: none; }
+  .gate-card {
+    background: #fff; padding: 2.4rem 2rem; border-radius: 20px; text-align: center;
+    max-width: 360px; width: 100%;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 24px 55px -20px rgba(73,79,131,.45);
+  }
+  .gate-card img { width: 86px; height: auto; margin: 0 auto 1rem; display: block; }
+  .gate-title { font-family: 'Fraunces', Georgia, serif; color: #494f83; font-size: 1.5rem; margin: 0 0 .25rem; }
+  .gate-title em { font-style: normal; color: #b3427a; }
+  .gate-card p { color: #6c6b88; font-size: .95rem; margin: 0 0 1.3rem; }
+  .gate-card input {
+    width: 100%; box-sizing: border-box; padding: .8rem 1rem; font-size: 1rem;
+    border: 1.5px solid #e6dde3; border-radius: 12px; margin-bottom: .8rem;
+  }
+  .gate-card input:focus { outline: 3px solid #b3427a; outline-offset: 1px; border-color: #b3427a; }
+  .gate-card button {
+    width: 100%; padding: .85rem; border: 0; border-radius: 999px; cursor: pointer;
+    font-family: inherit; font-weight: 700; font-size: 1rem; color: #fff;
+    background: linear-gradient(135deg, #b3427a 0%, #8c2f5f 100%);
+  }
+  .gate-err { color: #b3427a; font-size: .85rem; min-height: 1.1em; margin-top: .6rem; font-weight: 600; }
+</style>
 </head>
 
 <body>
+
+<!-- Cortina de acesso — site em construção (proteção leve; NÃO é segurança real) -->
+<div id="gate">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <img src="assets/logo.png" alt="EndoAfetos" width="86" height="63" />
+    <div class="gate-title">Endo<em>Afetos</em></div>
+    <p>Site em construção. Digite a senha para acessar.</p>
+    <input type="password" id="gatePass" placeholder="Senha" aria-label="Senha" autocomplete="off" />
+    <button type="submit">Entrar</button>
+    <div class="gate-err" id="gateErr" role="alert"></div>
+  </form>
+</div>
+<script>
+(function () {
+  var HASH = "cbeb918de9fecb47c589bde19bbadf2f66db911b6097d417ddfa71dc09d243ab";
+  var KEY = "endoafetos_site_unlocked";
+  function unlock() { document.body.classList.add('unlocked'); }
+  if (sessionStorage.getItem(KEY) === HASH) { unlock(); }
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gatePass');
+    var err = document.getElementById('gateErr');
+    if (!document.body.classList.contains('unlocked') && input) { input.focus(); }
+    if (!form) { return; }
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var h = await sha256(input.value);
+      if (h === HASH) { sessionStorage.setItem(KEY, HASH); unlock(); }
+      else { err.textContent = 'Senha incorreta.'; input.value = ''; input.focus(); }
+    });
+  });
+})();
+</script>
 
 <!-- ============================================================= -->
 <!--  CABEÇALHO / NAVEGAÇÃO                                        -->
