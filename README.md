@@ -46,7 +46,20 @@ O site está na raiz, então o Pages publica direto:
 
 > Como é um site de projeto, ele é servido no subcaminho `/endoafetos/`. Todos os
 > caminhos de assets são relativos, então funcionam normalmente nesse subcaminho.
-> Para um domínio próprio, configure-o em Settings → Pages → Custom domain.
+
+### 🌐 Domínio próprio — www.endoafetos.com.br
+
+Todo o SEO já aponta para `https://www.endoafetos.com.br/`. Para ativar o domínio
+faça **nesta ordem** — não adicione o arquivo `CNAME` antes do DNS, senão o endereço
+`github.io` para de responder até o domínio propagar:
+
+1. **DNS** (painel do registrador do `.com.br`):
+   - `CNAME`  `www`  →  `outcast2020.github.io`
+   - Apex (`endoafetos.com.br`, sem www): 4 registros `A` → `185.199.108.153`,
+     `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (o GitHub redireciona o apex para o `www`).
+2. **GitHub → Settings → Pages → Custom domain**: digite `www.endoafetos.com.br` e salve
+   (isso cria o arquivo `CNAME` na raiz). Marque **Enforce HTTPS** quando ficar disponível.
+3. Aguarde a propagação do DNS e a emissão do certificado (minutos a algumas horas).
 
 ## ✏️ Personalizar
 
@@ -60,15 +73,26 @@ O site está na raiz, então o Pages publica direto:
 - **Imagem de compartilhamento** — hoje usa `assets/logo.jpg`. Para uma prévia ideal,
   crie uma arte `1200×630 px` e atualize `og:image`/`twitter:image` no `index.html`.
 
-## 🔎 SEO & Localização
+## 🔎 SEO & aparecer no Google
 
-Já incluído no `index.html`: título, descrição e palavras-chave (da mais à menos relevante);
-meta tags de geolocalização priorizando **Salvador → Bahia → Brasil**; Open Graph / Twitter Card;
-e dados estruturados JSON-LD (`Organization` / `MedicalOrganization`).
+Já configurado no `index.html` (tudo apontando para `https://www.endoafetos.com.br/`):
+`title` e `meta description` otimizados (com "endometriose" e "Salvador"), `canonical`,
+Open Graph / Twitter Card, meta tags de geolocalização (**Salvador → Bahia → Brasil**),
+`robots.txt`, `sitemap.xml` e dados estruturados JSON-LD (`Organization`/`MedicalOrganization`,
+com telefone e ponto de contato).
 
-> **Antes de publicar em produção:** defina o domínio real e atualize as URLs
-> (`endoafetos.com.br`) em `canonical`, `og:url`, `twitter:image`, o `url`/`logo` do
-> JSON-LD, `sitemap.xml` e `robots.txt`.
+**O que aparece no resultado do Google é o `title` + a `meta description`** — não o texto
+oculto da página. Para o site ser indexado (só acontece depois de o domínio entrar no ar):
+
+1. **Google Search Console** (search.google.com/search-console): adicione a propriedade
+   do tipo **Domínio** (`endoafetos.com.br`) e verifique pelo **registro DNS TXT** fornecido.
+2. Em **Sitemaps**, envie `https://www.endoafetos.com.br/sitemap.xml`.
+3. Em **Inspeção de URL**, teste a home e clique em **Solicitar indexação**.
+4. A indexação costuma levar de alguns dias a ~2 semanas.
+
+> Melhorias opcionais: criar uma imagem de compartilhamento dedicada `1200×630`
+> (hoje o preview social usa `assets/logo.jpg`) e remover o bloco oculto
+> `visually-hidden` do `index.html` — texto oculto não ajuda o ranqueamento.
 
 ## 🔗 Links oficiais
 
