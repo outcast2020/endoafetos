@@ -114,82 +114,9 @@
   ]
 }
 </script>
-
-<!-- Cortina de acesso (site em construção) — proteção leve do lado do cliente -->
-<style id="gate-style">
-  body:not(.unlocked) > header,
-  body:not(.unlocked) > main,
-  body:not(.unlocked) > footer,
-  body:not(.unlocked) > .to-top { display: none !important; }
-  #gate {
-    position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 1.25rem;
-    background:
-      radial-gradient(1000px 500px at 50% -10%, #f7e0b4 0%, transparent 55%),
-      linear-gradient(160deg, #f8f4f2 0%, #e4dbef 100%);
-    font-family: 'Nunito', -apple-system, 'Segoe UI', sans-serif;
-  }
-  body.unlocked #gate { display: none; }
-  .gate-card {
-    background: #fff; padding: 2.4rem 2rem; border-radius: 20px; text-align: center;
-    max-width: 360px; width: 100%;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 24px 55px -20px rgba(73,79,131,.45);
-  }
-  .gate-card img { width: 86px; height: auto; margin: 0 auto 1rem; display: block; }
-  .gate-title { font-family: 'Fraunces', Georgia, serif; color: #494f83; font-size: 1.5rem; margin: 0 0 .25rem; }
-  .gate-title em { font-style: normal; color: #b3427a; }
-  .gate-card p { color: #6c6b88; font-size: .95rem; margin: 0 0 1.3rem; }
-  .gate-card input {
-    width: 100%; box-sizing: border-box; padding: .8rem 1rem; font-size: 1rem;
-    border: 1.5px solid #e6dde3; border-radius: 12px; margin-bottom: .8rem;
-  }
-  .gate-card input:focus { outline: 3px solid #b3427a; outline-offset: 1px; border-color: #b3427a; }
-  .gate-card button {
-    width: 100%; padding: .85rem; border: 0; border-radius: 999px; cursor: pointer;
-    font-family: inherit; font-weight: 700; font-size: 1rem; color: #fff;
-    background: linear-gradient(135deg, #b3427a 0%, #8c2f5f 100%);
-  }
-  .gate-err { color: #b3427a; font-size: .85rem; min-height: 1.1em; margin-top: .6rem; font-weight: 600; }
-</style>
 </head>
 
 <body>
-
-<!-- Cortina de acesso — site em construção (proteção leve; NÃO é segurança real) -->
-<div id="gate">
-  <form class="gate-card" id="gateForm" autocomplete="off">
-    <img src="assets/logo.png" alt="EndoAfetos" width="86" height="63" />
-    <div class="gate-title">Endo<em>Afetos</em></div>
-    <p>Site em construção. Digite a senha para acessar.</p>
-    <input type="password" id="gatePass" placeholder="Senha" aria-label="Senha" autocomplete="off" />
-    <button type="submit">Entrar</button>
-    <div class="gate-err" id="gateErr" role="alert"></div>
-  </form>
-</div>
-<script>
-(function () {
-  var HASH = "cbeb918de9fecb47c589bde19bbadf2f66db911b6097d417ddfa71dc09d243ab";
-  var KEY = "endoafetos_site_unlocked";
-  function unlock() { document.body.classList.add('unlocked'); }
-  if (sessionStorage.getItem(KEY) === HASH) { unlock(); }
-  async function sha256(str) {
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
-  }
-  document.addEventListener('DOMContentLoaded', function () {
-    var form = document.getElementById('gateForm');
-    var input = document.getElementById('gatePass');
-    var err = document.getElementById('gateErr');
-    if (!document.body.classList.contains('unlocked') && input) { input.focus(); }
-    if (!form) { return; }
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      var h = await sha256(input.value);
-      if (h === HASH) { sessionStorage.setItem(KEY, HASH); unlock(); }
-      else { err.textContent = 'Senha incorreta.'; input.value = ''; input.focus(); }
-    });
-  });
-})();
-</script>
 
 <!-- ============================================================= -->
 <!--  CABEÇALHO / NAVEGAÇÃO                                        -->
@@ -207,9 +134,9 @@
 
     <ul class="nav__menu" id="navMenu">
       <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#proposito">Propósito</a></li>
-      <li><a href="#mvv">Missão &amp; Valores</a></li>
+      <li><a href="#acoes">Nossas Ações</a></li>
       <li><a href="#equipe">Equipe</a></li>
+      <li><a href="#atendimento">Atendimento</a></li>
       <li><a href="#encontros">Encontros</a></li>
       <li><a href="#contato">Contato</a></li>
       <li>
@@ -312,8 +239,66 @@
     </div>
   </section>
 
+  <!-- ===================== NOSSAS AÇÕES ===================== -->
+  <section class="section" id="acoes">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Nossa trajetória</span>
+        <h2>Nossas ações desde 2024</h2>
+        <p>Uma história real de impacto — rodas de conversa, oficinas, eventos científicos e reconhecimento.</p>
+      </div>
+
+      <div class="badge-highlight reveal">
+        <span class="badge-highlight__icon" aria-hidden="true">🏆</span>
+        <div>
+          <strong>Aprovado no FLOW — 4ª edição (Hub Salvador), junho de 2026.</strong>
+          EndoAfetos reconhecido como startup de tecnologia e acolhimento para o cuidado integral na endometriose.
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-year reveal">
+          <div class="tl-year__label">2024</div>
+          <div class="tl-year__body">
+            <h3>Rodas de conversa sobre endometriose e saúde mental</h3>
+            <p>Seis encontros mensais que deram início ao projeto:</p>
+            <p class="tl-themes"><span aria-hidden="true">🌻</span> Histórias Inspiradoras · Autoimagem · Autocuidado · Rede de Apoio · Sexualidade · Hábitos Saudáveis</p>
+          </div>
+        </div>
+
+        <div class="tl-year reveal">
+          <div class="tl-year__label">2025</div>
+          <div class="tl-year__body">
+            <h3>Oficinas, painéis, lives e rodas presenciais</h3>
+            <ul class="tl-list">
+              <li><strong>Live interativa (Mês Psi — CRP-03):</strong> “Cuidado psicossocial e acolhimento na jornada da endometriose”.</li>
+              <li><strong>Simpósio EmbryoWork (LARHA/FTC):</strong> mesa redonda sobre impactos emocionais, psicológicos e sociais na fertilidade.</li>
+              <li><strong>Oficina “Cuidar de Si, Empreender com Afeto”:</strong> na Paramour Semijoias.</li>
+              <li><strong>Roda “Corpo que Cuida, Corpo que Sente”:</strong> com a Rede de Mulheres.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-year reveal">
+          <div class="tl-year__label">2026</div>
+          <div class="tl-year__body">
+            <h3>Rodas corporativas, encontros integrativos e reconhecimento</h3>
+            <ul class="tl-list">
+              <li><strong>Janeiro Branco:</strong> “Saúde mental e o cuidado coletivo” (Villa Camarão).</li>
+              <li><strong>Maio:</strong> “Cuidado ampliado na endometriose — estratégias para qualidade de vida” (Clínica Gandra Saúde Integrativa).</li>
+              <li><strong>Junho:</strong> aprovação no FLOW 4ª edição — Hub Salvador. 🏆</li>
+              <li><strong>Julho:</strong> encontros temáticos on-line — do autocuidado à rede de apoio, passando pela sexualidade e pelos desafios da fertilidade.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="tl-continuous reveal"><span aria-hidden="true">🌻</span> <strong>Ações contínuas:</strong> conteúdos de conscientização no Instagram e grupo de WhatsApp para apoio e troca entre as participantes.</p>
+    </div>
+  </section>
+
   <!-- ===================== MISSÃO / VISÃO / VALORES ===================== -->
-  <section class="section" id="mvv">
+  <section class="section section--tint" id="mvv">
     <div class="container">
       <div class="section__head reveal">
         <span class="kicker">O que nos guia</span>
@@ -351,7 +336,7 @@
   </section>
 
   <!-- ===================== EQUIPE ===================== -->
-  <section class="section section--tint" id="equipe">
+  <section class="section" id="equipe">
     <div class="container">
       <div class="section__head reveal">
         <span class="kicker">Nossa equipe</span>
@@ -439,6 +424,39 @@
     </div>
   </section>
 
+  <!-- ===================== ATENDIMENTO PSICOLÓGICO ===================== -->
+  <section class="section section--tint" id="atendimento">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Atendimento individual</span>
+        <h2>Psicoterapia individual com as psicólogas do EndoAfetos</h2>
+        <p>Liliane e Fernanda, idealizadoras do projeto, também atendem em consultório. Se você busca um cuidado individual e contínuo, agende uma sessão de psicoterapia.</p>
+      </div>
+
+      <div class="attend-grid">
+        <article class="attend-card reveal">
+          <div class="member__photo" data-initials="LC">
+            <img src="assets/LilianeCarmen.jpg" alt="Liliane Carmen" loading="lazy" onerror="this.style.display='none'" style="object-position:50% 10%" />
+          </div>
+          <h3>Liliane Carmen</h3>
+          <p class="attend-card__role">Psicóloga e Psicanalista Clínica · CRP 03/13980</p>
+          <a class="btn btn--primary" href="https://wa.me/5571988600355?text=Ol%C3%A1%2C%20Liliane!%20Gostaria%20de%20agendar%20um%20atendimento%20psicol%C3%B3gico%20individual." target="_blank" rel="noopener noreferrer">Agendar atendimento individual</a>
+        </article>
+
+        <article class="attend-card reveal">
+          <div class="member__photo" data-initials="FA">
+            <img src="assets/FernandaAlmeida.jpg" alt="Fernanda Almeida" loading="lazy" onerror="this.style.display='none'" style="object-position:50% 3%" />
+          </div>
+          <h3>Fernanda Almeida</h3>
+          <p class="attend-card__role">Psicóloga Clínica e Hospitalar · CRP 03/18483</p>
+          <a class="btn btn--primary" href="https://wa.me/5571983258192?text=Ol%C3%A1%2C%20Fernanda!%20Gostaria%20de%20agendar%20um%20atendimento%20psicol%C3%B3gico%20individual." target="_blank" rel="noopener noreferrer">Agendar atendimento com Fernanda</a>
+        </article>
+      </div>
+
+      <p class="attend-note reveal">O atendimento psicológico individual é um serviço clínico particular, distinto das rodas de conversa gratuitas do projeto.</p>
+    </div>
+  </section>
+
   <!-- ===================== ENCONTROS / CONTEÚDO ===================== -->
   <section class="section" id="encontros">
     <div class="container">
@@ -451,32 +469,34 @@
         <!-- Para publicar um vídeo: preencha data-embed com o link do YouTube no formato
              https://www.youtube.com/embed/ID_DO_VIDEO  (veja o README) -->
         <figure class="video reveal">
-          <div class="video__frame" data-embed="">
-            <iframe title="EndoAfetos — vídeo 1" src="" loading="lazy"
+          <div class="video__frame" data-embed="https://www.youtube.com/embed/Co_HKr2B40M">
+            <iframe title="Live CRP-03 — Cuidado psicossocial na endometriose" src="" loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen></iframe>
             <div class="video__placeholder">
               <span aria-hidden="true">▶</span>
-              <p>Vídeo em breve</p>
-              <small>Adicione o link do YouTube no atributo <code>data-embed</code></small>
+              <p>Carregando vídeo…</p>
             </div>
           </div>
-          <figcaption>Sobre a endometriose e a saúde mental</figcaption>
+          <figcaption>Live CRP-03 · Mês Psi 2025 — Cuidado psicossocial na endometriose</figcaption>
         </figure>
+      </div>
 
-        <figure class="video reveal">
-          <div class="video__frame" data-embed="">
-            <iframe title="EndoAfetos — vídeo 2" src="" loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-            <div class="video__placeholder">
-              <span aria-hidden="true">▶</span>
-              <p>Vídeo em breve</p>
-              <small>Adicione o link do YouTube no atributo <code>data-embed</code></small>
-            </div>
-          </div>
-          <figcaption>Depoimentos e acolhimento</figcaption>
-        </figure>
+      <!-- Galeria dos encontros presenciais de 2024 -->
+      <h3 class="block-title reveal">Onde tudo começou · rodas de conversa de 2024</h3>
+      <div class="gallery reveal">
+        <a class="gallery__item" href="assets/Depoimentos/IMG-20260713-WA0001.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="assets/Depoimentos/IMG-20260713-WA0001.jpg" alt="1º Encontro EndoAfetos — Histórias Inspiradoras" loading="lazy" />
+        </a>
+        <a class="gallery__item" href="assets/Depoimentos/IMG-20260713-WA0006.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="assets/Depoimentos/IMG-20260713-WA0006.jpg" alt="2º Encontro EndoAfetos — Autoimagem" loading="lazy" />
+        </a>
+        <a class="gallery__item" href="assets/Depoimentos/IMG-20260713-WA0008.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="assets/Depoimentos/IMG-20260713-WA0008.jpg" alt="3º Encontro EndoAfetos — Autocuidado" loading="lazy" />
+        </a>
+        <a class="gallery__item" href="assets/Depoimentos/IMG-20260713-WA0005.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="assets/Depoimentos/IMG-20260713-WA0005.jpg" alt="4º Encontro EndoAfetos — Rede de Apoio" loading="lazy" />
+        </a>
       </div>
 
       <div class="pillars reveal">
@@ -487,8 +507,32 @@
     </div>
   </section>
 
+  <!-- ===================== DEPOIMENTOS ===================== -->
+  <section class="section section--tint" id="depoimentos">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Depoimentos</span>
+        <h2>O que dizem quem já participou</h2>
+      </div>
+      <div class="testi-grid">
+        <figure class="testi reveal">
+          <blockquote>Foi uma experiência especial! Acolhimento, escuta, partilha, cura, transformação… Estou muito feliz em fazer parte deste grupo. Gratidão pela escuta, acolhimento!</blockquote>
+          <figcaption>Participante das rodas de conversa</figcaption>
+        </figure>
+        <figure class="testi reveal">
+          <blockquote>Conseguir quebrar barreiras e falar um pouco publicamente e sentir o acolhimento de todas, foi incrível!</blockquote>
+          <figcaption>Participante das rodas de conversa</figcaption>
+        </figure>
+        <figure class="testi reveal">
+          <blockquote>Para mim, particularmente, foi uma experiência muito boa: saber que posso ser acolhida e acolher nesta nova família. Reconhecer nossos limites é tudo!</blockquote>
+          <figcaption>Participante das rodas de conversa</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== CONTATO ===================== -->
-  <section class="section section--tint" id="contato">
+  <section class="section" id="contato">
     <div class="container">
       <div class="section__head reveal">
         <span class="kicker">Fale conosco</span>
@@ -551,9 +595,11 @@
     </div>
     <nav class="footer__nav" aria-label="Navegação do rodapé">
       <a href="#sobre">Sobre</a>
-      <a href="#proposito">Propósito</a>
+      <a href="#acoes">Nossas Ações</a>
       <a href="#equipe">Equipe</a>
+      <a href="#atendimento">Atendimento</a>
       <a href="#encontros">Encontros</a>
+      <a href="#depoimentos">Depoimentos</a>
       <a href="#contato">Contato</a>
     </nav>
     <div class="footer__social">
